@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  /* Vibrant, cheerful sage green */
+  --color-sage-50: #f0faf2;
+  --color-sage-100: #d4f4db;
+  --color-sage-200: #a8e9b5;
+  --color-sage-300: #6fd481;
+  --color-sage-400: #42bc57;
+  --color-sage-500: #28a33e;
+  --color-sage-600: #1e8330;
+  --color-sage-700: #196626;
+  --color-sage-800: #154f1f;
+  --color-sage-900: #0f3917;
+
+  /* Warm gray (cozy, not cold) */
+  --color-gray-50: #faf9f7;
+  --color-gray-100: #f3f0eb;
+  --color-gray-200: #e8e2d9;
+  --color-gray-300: #d4cbbf;
+  --color-gray-400: #b0a496;
+  --color-gray-500: #8c8076;
+  --color-gray-600: #6e6460;
+  --color-gray-700: #514c48;
+  --color-gray-800: #363028;
+  --color-gray-900: #201d18;
+  --color-gray-950: #11100d;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Smooth scrolling for chat window */
+.chat-scroll {
+  scroll-behavior: smooth;
+}
