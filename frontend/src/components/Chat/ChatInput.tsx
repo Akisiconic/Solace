@@ -1,4 +1,5 @@
-import { FormEvent, KeyboardEvent, useState } from 'react';
+import { useState } from 'react';
+import type { FormEvent, KeyboardEvent } from 'react';
 
 interface Props {
   onSend: (content: string) => void;
