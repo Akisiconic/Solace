@@ -1,0 +1,17 @@
+{
+  "name": "Solace",
+  "short_name": "Solace",
+  "description": "Your safe space for mental wellness",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#11100d",
+  "theme_color": "#28a33e",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
