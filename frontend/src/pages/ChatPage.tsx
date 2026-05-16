@@ -10,6 +10,7 @@ export default function ChatPage() {
   const { id } = useParams<{ id: string }>();
   const [session, setSession] = useState<ChatSession | null>(null);
   const [loading, setLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,15 +25,30 @@ export default function ChatPage() {
 
   return (
     <div className="flex h-screen bg-white dark:bg-gray-900">
-      <Sidebar />
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <main className="flex-1 flex flex-col overflow-hidden relative">
-        <div className="absolute top-3 right-4 z-10">
+        {/* Mobile top bar */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800 lg:hidden">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <span className="text-base font-semibold text-sage-600 dark:text-sage-400">Solace</span>
+          <ThemeToggle />
+        </div>
+
+        {/* Desktop theme toggle */}
+        <div className="absolute top-3 right-4 z-10 hidden lg:block">
           <ThemeToggle />
         </div>
 
         {!id && (
-          <div className="flex-1 flex items-center justify-center text-gray-400 dark:text-gray-600 text-sm">
+          <div className="flex-1 flex items-center justify-center text-gray-400 dark:text-gray-600 text-sm px-4 text-center">
             Select a conversation or start a new one.
           </div>
         )}
