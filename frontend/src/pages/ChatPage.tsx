@@ -48,8 +48,20 @@ export default function ChatPage() {
         </div>
 
         {!id && (
-          <div className="flex-1 flex items-center justify-center text-gray-400 dark:text-gray-600 text-sm px-4 text-center">
-            Select a conversation or start a new one.
+          <div className="flex-1 flex flex-col items-center justify-center gap-4 text-gray-400 dark:text-gray-600 text-sm px-4 text-center">
+            <p>Select a conversation or start a new one.</p>
+            <button
+              onClick={async () => {
+                const session = await chatApi.createSession();
+                navigate(`/chat/${session._id}`);
+              }}
+              className="lg:hidden flex items-center gap-2 px-5 py-3 rounded-xl bg-sage-500 hover:bg-sage-600 text-white text-sm font-medium transition-colors shadow-lg shadow-sage-300/40"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              New conversation
+            </button>
           </div>
         )}
 
