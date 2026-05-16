@@ -17,7 +17,6 @@ export default function ChatWindow({ session, onSessionUpdate }: Props) {
   const [checkedIn, setCheckedIn] = useState(session.messages.length > 0);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  // Sync messages when the active session changes
   useEffect(() => {
     setMessages(session.messages);
     setCheckedIn(session.messages.length > 0);
@@ -36,18 +35,12 @@ export default function ChatWindow({ session, onSessionUpdate }: Props) {
       const { message } = await chatApi.sendMessage(session._id, content);
       const assistant: Message = { ...message, role: 'assistant' as const };
       setMessages((prev) => [...prev, assistant]);
-
-      // Notify parent so sidebar title refreshes
       const updated = await chatApi.getSession(session._id);
       onSessionUpdate(updated);
-    } catch (err) {
+    } catch {
       setMessages((prev) => [
         ...prev,
-        {
-          role: 'assistant',
-          content: 'Something went wrong. Please try again.',
-          timestamp: new Date().toISOString(),
-        },
+        { role: 'assistant', content: 'Something went wrong. Please try again.', timestamp: new Date().toISOString() },
       ]);
     } finally {
       setTyping(false);
@@ -59,28 +52,27 @@ export default function ChatWindow({ session, onSessionUpdate }: Props) {
   }
 
   return (
-    <div className="flex flex-col h-screen">
-      {/* Header */}
-      <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-        <h1 className="text-base font-medium text-gray-900 dark:text-gray-100 truncate">
-          {session.title}
-        </h1>
-      </div>
-
+    <div className="flex flex-col h-full bg-white dark:bg-gray-900">
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 bg-gray-50 dark:bg-gray-950 chat-scroll">
-        {messages.length === 0 && (
-          <div className="flex items-center justify-center h-full">
-            <p className="text-sm text-gray-400 dark:text-gray-600">
-              Say hello — Solace is here to listen.
-            </p>
-          </div>
-        )}
-        {messages.map((m, i) => (
-          <MessageBubble key={i} message={m} />
-        ))}
-        {typing && <TypingIndicator />}
-        <div ref={bottomRef} />
+      <div className="flex-1 overflow-y-auto py-4 bg-white dark:bg-gray-900 chat-scroll">
+        <div className="max-w-3xl mx-auto">
+          {messages.length === 0 && (
+            <div className="flex items-center justify-center h-40">
+              <p className="text-sm text-gray-400 dark:text-gray-600">
+                Say hello — Solace is here to listen.
+              </p>
+            </div>
+          )}
+          {messages.map((m, i) => (
+            <MessageBubble key={i} message={m} />
+          ))}
+          {typing && (
+            <div className="px-4 py-2">
+              <TypingIndicator />
+            </div>
+          )}
+          <div ref={bottomRef} />
+        </div>
       </div>
 
       <ChatInput onSend={handleSend} disabled={typing} />
