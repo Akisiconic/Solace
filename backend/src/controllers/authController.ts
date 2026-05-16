@@ -4,11 +4,12 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User';
 
 const COOKIE_NAME = 'solace_token';
+const isProd = process.env.NODE_ENV === 'production';
 const COOKIE_OPTIONS = {
-  httpOnly: true,    // JS cannot read this — blocks XSS token theft
-  secure: process.env.NODE_ENV === 'production', // HTTPS only in prod
-  sameSite: 'lax' as const, // CSRF protection while allowing normal navigation
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
+  httpOnly: true,
+  secure: isProd,
+  sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
+  maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
 function signToken(userId: string): string {
